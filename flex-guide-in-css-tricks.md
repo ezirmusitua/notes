@@ -2,6 +2,7 @@
 一种更有效率的布局/对齐和空间分配方式  
 背后思想: 给予容器控制其内部元素 size 的能力  
 和传统布局方法相比，是方向无关的  
+[Codepen 总结](http://codepen.io/enxaneta/pen/adLPwv)  
 
 ### 基础 & 基本术语 -- container 属性 
 1. container  
@@ -20,6 +21,8 @@
 }
 ```  
 3. flex-wrap  
+Allow the items to wrap as needed with this property
+The CSS flex-wrap property specifies whether flex items are **forced into a single line or can be wrapped onto multiple lines**
 ![flex-wrap](https://css-tricks.com/wp-content/uploads/2014/05/flex-wrap.svg)  
 ```  
 .container {
@@ -60,6 +63,7 @@ This aligns a flex container's lines within when there is extra space in the cro
 ![items](https://css-tricks.com/wp-content/uploads/2014/05/flex-items.svg)  
 2. order  
 control order.  
+Specifies the order used to lay out flex items in their flex container
 ![order](https://css-tricks.com/wp-content/uploads/2013/04/order-2.svg)  
 ```  
 .item {
