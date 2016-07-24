@@ -10,10 +10,10 @@ In many ways, it is similar to JSLint and JSHint with a few exceptions:
 ```  
 $ eslint --init  
 $ eslint test1.js test2.js  
-```  
+```
 
 ## Configuration  
-In .eslintrc.*:  
+In .eslintrc.*:  	
 ```  
 {  
     "env": {  
@@ -40,7 +40,7 @@ In .eslintrc.*:
         ]
     }
 }  
-```  
+```
 **ESLint will not lint your code unless you extend from a shared configuration or explicitly turn rules on in your configuration**  
 [find eslint config file](https://www.npmjs.com/search?q=eslint-config)  
 [find configuration list](http://eslint.org/docs/user-guide/configuring)  
@@ -74,7 +74,7 @@ ESLint 主要有以下特点:
     "space-infix-ops": 2,  
   }  
 }  
-```  
+```
 
 * package.json 中添加 eslintConfig 配置模块  
 ```  
@@ -88,7 +88,7 @@ ESLint 主要有以下特点:
     }  
   }  
 }  
-```  
+```
 
 * 直接在代码文件中定义  
 ```  
@@ -104,7 +104,7 @@ alert('doing awful things');
 /* eslint no-comma-dangle:1 */  
 // Make this just a warning, not an error  
 var obj = { key: 'value', }  
-```  
+```
 
 ## 工作流集成  
 ESLint 可以集成到主流的编辑器和构建工具中, 以便我们在编写的代码的同时进行 lint. 
@@ -118,10 +118,10 @@ gulp.task('lint', function() {
     .pipe(eslint())  
     .pipe(eslint.format());  
 });  
-```  
+```
 
 ## 自定义规则  
 在 NPM 上以 eslintplugin 为关键词, 可以搜索到很多插件:  
 * eslint-plugin-react  
 * ...  
-如果有自行开发插件的需求: [ESLint 插件开发文档](http://eslint.org/docs/developer-guide/working-with-plugins)  
+  如果有自行开发插件的需求: [ESLint 插件开发文档](http://eslint.org/docs/developer-guide/working-with-plugins)  

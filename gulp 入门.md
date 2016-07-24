@@ -1,4 +1,4 @@
-[来源](http://www.ydcss.com/archives/18)  
+﻿[来源](http://www.ydcss.com/archives/18)  
 前端开发过程中对代码进行构建的工具,`自动化`项目的构建利器  
 gulp是基于Nodejs的自动任务运行器, 她能自动化地完成 javascript/coffee/sass/less/html/image/css 等文件的的测试、检查、合并、压缩、格式化、浏览器自动刷新、部署文件生成, 并监听文件在改动后重复指定的这些步骤  
 实现上,借鉴了Unix操作系统的**管道(pipe)**思想,前一级的输出,直接变成后一级的输入  
