@@ -23,5 +23,31 @@
 * [GITHUB Repo Setting](https://github.com/ezirmusitua/<your-repo-name>/settings) -> Webhooks & Services -> Travis CI -> Test Services 
 
 ### 实践教程  
+#### Javascript
+```  
+language: node_js  
+node_js:
+    - "5.11"  
+
+before_script:  
+    - npm install  
+
+script:
+    - npm start
+```  
+针对 NodeJS 类型的项目  
+指定语言/指定版本/在运行`script`之前做什么/运行`script`  
+
+#### Python  
+```  
+language: python  
+python: 
+    - "2.7"
+
+install: "pip install -r requirements.txt"
+
+script: "python main.js"
+```  
+同上
 
 
