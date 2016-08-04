@@ -123,7 +123,204 @@ var.gettype().name
 2. 后台生成 PSVariable  
 [更多](http://www.pstips.net/powershell-variable-management-behind-the-scenes.html)  
 
-### 
+## Powershell 数组和哈希表  
+### 命令返回数组
+```  
+$ip = ipconfig  
+$ip -is [array]  
+```  
+使用 Format-List * 查看对象的属性和方法  
+
+### 创建数组  
+1. $num = 1, 2, 3, 4, 5  
+2. $num = 1..5(Number only)
+3. $multiTypeArray = 1, "2012 world cup", ([System.Guid]::NewGuid()), (get-date)  
+4. $emptyArray = @()  
+5. $singleElementArray = ,5  
+
+### 访问数组  
+1. from 0 -> arrayLength - 1 / -1  
+2. multi element: $array[0, 4, 8]  
+3. reverse array: $array[($array.Count)..0]  
+4. insert: $array += 5  
+5. delete: $array = $array[0..1] + $array[3] // delete 2  
+
+### 复制数组  
+*默认复制引用*  
+Clone:  
+```  
+$chs = @("A", "B", "C")  
+$chBak = $chs.Clone()  
+```  
+
+### 强类型数组  
+统一数组中元素类型  
+```  
+[int[]] $number = @()  
+```  
+
+### 使用 hash table  
+key-value  
+1. create
+```  
+$stuHash = @{name="ming"; age=12; sex="male"; books="wu haha ~ "}  
+```  
+
+2. insert
+```  
+$stuHash = @{}  
+$stuHash.name = "ming"  
+```  
+
+3. update  
+```  
+$stuHash = @{name="ning"}  
+$stuHash.name = "ming"  
+```  
+
+4. delete  
+$stuHash = @{name="ming"}  
+$stuHash.remove(name)  
+
+5. Format table  
+```  
+Dir | Format-Table  
+```  
+Expression -- 绑定的表达式  
+Width -- 列宽度  
+Label -- 列标题  
+Alignment -- 列对齐方式  
+
+## Powershell 管道  
+### 使用  
+1. 面向对象的管道  
+每个命令的末尾可以使用新的命令对上一个命令进行处理(除非以管道输出命令结尾)  
+2. 常用命令:  
+    * Compare-Object  
+    * ConvertTo-Html  
+    * ExportTo-Clixml  
+    * ExportTo-Csv  
+    * ForEach-Object  
+    * Format-Table  
+    * Format-Wide  
+    * Get-Unique  
+    * Group-Object  
+    * Import-Clixml  
+    * Measure-Object  
+    * more  
+    * Out-File  
+    * Out-Null  
+    * Out-Printer  
+    * Out-String  
+    * Select-Object  
+    * Sort-Object  
+    * Tee-Object  
+    * Where-Object  
+
+3. 处理模式
+    * 顺序  
+    * 流  
+
+4. 阻塞问题  
+
+### 对象 To 文本  
+*Out-default*  
+
+*Get-Command -Verb Format*  
+
+\# 显示指定属性  
+```  
+ls | Format-Table Name, Length, LastWriteTime  
+```  
+*通配符*  
+```  
+Get-Process i* | Format-Table Name, pe*64  
+```  
+
+*修改列标题*  
+```  
+$column = !{Expression={ [int](_.Length/1kb) }; Label="KB" }
+Dir | Format-Table Name, $column  
+```  
+
+*优化列宽 -auto*  
+
+### 排序和分组  
+Sort-Object -Descending  
+```  
+Dir | Sort-Object @{expression="Length";Descending=$true},@{expression="Name";Ascending=$true}  
+```  
+Group-Object:  
+```  
+Get-Service | Group-Object Status  
+ls | Get-Object {$_.name.SubString(0, 1).toUpper()}  
+Dir | Sort-Object Extension, Name | Format-Table -groupBy Extension
+```  
+
+### 过滤  
+```  
+Get-service | Select-Object -First 1 | Get-Member -MemberType
+Get-service | Where-Object {$_.Status -eq "Running"}
+# 属性
+Get-WmiObject Win32_UserAccount -filter "LocalAccount=True AND Name='guest'"
+# 数量
+Dir | Select-Object -ExcludeProperty "*N*" -First 5
+# 逐个处理  
+ls | ForEach-Object {"文件名： 文件大小(M): " -f $_.Name,$_.Length/1M}
+# 去重 
+1,2,1,2 | Get-Unique
+```  
+
+### 分析和比较管道结果  
+```  
+# 计算  
+ls | measure length  
+# 统计  
+Get-Content .word.txt | measure -Line -Word -Character
+# 比较对象  
+$before=Get-Process
+$after = get-process 
+ompare-Object $before $after
+
+# 检查对象变化  
+$svc1=Get-Service wsearch
+$svc1.stop()
+$svc2=Get-Service wsearch
+Compare-Object $svc1 $svc2 -Property Status,Name
+
+# 快照  
+Get-Process  | Export-Clixml before.xml
+$before=Import-Clixml .before.xml
+$after=Get-Process
+Compare-Object -ReferenceObject $before -DifferenceObject $after
+```  
+
+### 导出管道结果  
+`get-command -Verb out`
+```  
+# 吸收  
+md ABD >$null
+md ABE | Out-Null
+# 修改输出格式  
+pwd;Get-Service
+# 强制文本输出  
+ls . -Recurse | Out-String
+# CSV  
+Get-Service | Export-Csv a.csv
+# HTML  
+Get-Service | ConvertTo-Html -Title "ls result" | Out-File a.html
+```  
+
+### 扩展类型系统  
+*ETS*  
+[参考](http://www.pstips.net/powershell-extended-type-system-1.html)  
+
+
+
+
+
+
+
 
 
 
