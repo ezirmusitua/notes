@@ -316,6 +316,197 @@ Get-Service | ConvertTo-Html -Title "ls result" | Out-File a.html
 [参考](http://www.pstips.net/powershell-extended-type-system-1.html)  
 
 
+## 对象  
+### 对象 = 属性 + 方法  
+1. 创建对象  
+```  
+$pocketKnife = New-Object object  
+$pocketKnife  
+```  
+2. 增加属性  
+```  
+Add-Member -InputObject $pocketKnife -Name Weight -Value "55" -MemberType NoteProperty  
+$pocketknife | Add-Member NoteProperty Blades 3  
+$pocketknife | Add-Member NoteProperty Manufacturer ABC
+```  
+
+3. 增加方法  
+```  
+# 增加一个新方法:
+Add-Member -memberType ScriptMethod -In $pocketknife `
+-name cut -Value { "I'm whittling now" }
+# 指定参数类型增加一个新方法:
+Add-Member -in $pocketknife ScriptMethod screw { "Phew...it's in!" }
+# 直接通过管道增加一个新方法:
+$pocketknife | Add-Member ScriptMethod corkscrew { "Pop! Cheers!" }
+```  
+
+### 属性: 描述对象是什么  
+
+### 方法: 对象做什么  
+
+### 使用  
+
+### 静态方法  
+查看类型支持的所有静态方法  
+```  
+[System.DateTime] | Get-Member -static -memberType *Method  
+```  
+
+可以使用感兴趣的 .NET 类型  
+
+查看程序集  
+
+### COM 对象  
+
+### 条件操作符  
+* -eq  ===  
+* -ne  !==  
+* -gt  >  
+* -ge  >=  
+* -lt  <  
+* -le  <=  
+* -contains  
+* -notcontains   
+
+取反 -not  
+
+布尔运算  
+-and  
+-or  
+-xor  
+-not  
+
+where -- ?  
+
+### IF-ELSEIF-ELSE  
+```  
+if($n -lt 0 ){"-1" } elseif($n -eq 0){"0"} else {"1"}  
+```  
+
+### SWITCH  
+```  
+switch($value)
+{
+    {$_ -lt 5 }   { "小于5"; break}
+    {$_ -gt 0 }   { "大于0"; break}
+    {$_ -lt 100}  { "小于100"; break}
+    Default {"没有匹配条件"}
+}
+```  
+-case 大小写  
+-wildcard 通配符  
+
+### ForEach-Object 循环  
+```  
+Get-WmiObject Win32_Service | ForEach-Object {"Name:"+ $_.DisplayName, ", Is ProcessId more than 100:" + ($_.ProcessId -gt 100)}
+```  
+
+### Foreach 循环  
+```  
+foreach ($n in $array)
+{
+    $n*$n
+}
+```  
+
+### while 和 do-while 循环  
+```  
+# do-while  
+do { $n=Read-Host } while( $n -ne 0)  
+# while  
+while($n -gt 0) {
+    $n
+    $n=$n-1
+}
+# 终止当前  
+$n=1
+while($n -lt 6)
+{
+    if($n -eq 4)
+    {
+        $n=$n+1
+        continue
+ 
+    }
+    else
+    {
+        $n
+    }
+    $n=$n+1
+}
+# 跳出循环  
+$n=1
+while($n -lt 6)
+{
+    if($n -eq 4)
+    {
+        break
+    }
+    $n
+    $n++
+}
+```  
+
+### For 循环  
+```  
+$sum=0
+for($i=1;$i -le 100;$i++)
+{
+    $sum+=$i
+}
+$sum
+```  
+
+### Switch 循环  
+```  
+# 使用Switch循环    
+$nums = 10..7
+Switch ($nums) {
+    Default { "n= $_" }
+}
+```  
+
+## 函数  
+### 定义函数  
+```  
+Function FuncName （args[]）{
+      code;
+}
+```  
+### 参数  
+1. $args 万能参数  
+2. 设置参数名称  
+```  
+function StringContact ($str1, $str2) {
+}
+```  
+3. 默认值  
+```  
+function StringContact ($str1="123", $str2) {
+}
+```  
+4. 强类型    
+```  
+function StringContact ([String]$str1="123", [String]$str2) {
+}
+```  
+
+### 返回值  
+可以返回多个或者使用 return 返回特定  
+
+### Powershell 查看支持的函数  
+```  
+dir function: | ft -AutoSize
+```  
+
+### 函数过滤管道  
+高级的东西  
+
+- - -  
+2016年8月3日23:04:49 -- 缺乏练习，暂时停止  
+
+
 
 
 
