@@ -36,17 +36,17 @@
     * **什么时候载入库**:  
     对于 HTML 应用程序,通常建议把所有的脚本都放置在 <body> 元素的最底部
     这会提高网页加载速度,因为 HTML 加载不受制于脚本加载
-    在我们的多个 AngularJS 实例中,您将看到 AngularJS 库是在文档的 <head> 区域被加载
-    在我们的实例中，AngularJS 在 <head> 元素中被加载,因为对 angular.module 的调用只能在库加载完成后才能进行
-    另一个解决方案是在 <body> 元素中加载 AngularJS 库,但是必须放置在您的 AngularJS 脚本前面
+    在我们的多个 AngularJS 实例中,您将看到 AngularJS 库是在文档的`<head>`区域被加载
+    在我们的实例中，AngularJS 在`<head>`元素中被加载,因为对 angular.module 的调用只能在库加载完成后才能进行
+    另一个解决方案是在`<body>`元素中加载 AngularJS 库,但是必须放置在您的 AngularJS 脚本前面
 
-7. 控制器--Controller--ng-controller  
+7. 控制器 -- Controller -- ng-controller  
     * 用于控制 AngularJS 应用  
     * 控制器是 JavaScript 对象,由标准的 JavaScript 对象的构造函数创建  
-    * 加载外部文件中的控制器:<\script src="personController.js"\>\<\/script\>  
+    * 加载外部文件中的控制器:`<\script src="personController.js"\>\<\/script\>`   
 
 8. AngularJS 指令  
-    * 新属性,扩展 HTML  
+    * 新属性, 扩展 HTML  
     * 内置的指令来为应用添加功能  
     * 自定义指令  
 
@@ -68,15 +68,11 @@ app.directive("runoobDirective", function() {
 </body>  
 ```  
 你可以通过以下方式来调用指令:  
-元素名  
-属性  
-类名  
-注释   
-restrict限制使用方式:  
-E 只限元素名使用  
-A 只限属性使用  
-C 只限类名使用  
-M 只限注释使用  
+元素名 -- E 
+属性 -- A  
+类名 -- C  
+注释 -- M   
+*restrict限制使用方式*    
 ```  
 var app = angular.module("myApp", []);  
 app.directive("runoobDirective", function() {  
@@ -86,16 +82,17 @@ app.directive("runoobDirective", function() {
     };  
 });  
 ```  
+
 11. Scope  
-scope 是模型,是一个 JavaScript 对象,带有属性和方法,这些属性和方法可以在视图和控制器中使用  
+scope 是模型, 是一个 JavaScript 对象, 带有属性和方法, 这些属性和方法可以在视图和控制器中使用  
 Scope(作用域) 是应用在 HTML (视图) 和 JavaScript (控制器)之间的纽带  
 作用范围:  
-根作用域:rootScope -- 作用于整个应用中 -- 是各个 controller 中 scope 的桥梁 -- 用 rootscope 定义的值,可以在各个 controller 中使用  
+    * rootScope -- 作用于整个应用中 -- 是各个 controller 中 scope 的桥梁 -- 用 rootscope 定义的值,可以在各个 controller 中使用  
 使用:  
 将 $scope 对象当作一个参数传递  
 **视图中,你不需要添加 $scope 前缀,只需要添加属性名即可**  
 
-12. AngularJS过滤器  
+12. AngularJS 过滤器  
 模型添加:{{ var | filter }}  
 指令添加:  
 ```  
@@ -107,24 +104,22 @@ Scope(作用域) 是应用在 HTML (视图) 和 JavaScript (控制器)之间的�
 13. Angular Service  
 服务是一个函数或对象，可在你的 AngularJS 应用中使用  
 AngularJS中的服务其实就是提供一种方式抽取共用类库  
-**
-比如说一些工具类方法，我们传统的做法就是自己写个 utility 类，把相关的工具方法填充到utility里面去，最后把utility类放到一个全局的变量中，这样任何地方都可以调用utility的方法。
-如果用AngularJS的service，你按照他的规则创建一个 utility 服务，然后在任何地方都可以通过依赖注入调用utility里面的方法
-**  
+> 比如说一些工具类方法，我们传统的做法就是自己写个 utility 类，把相关的工具方法填充到 utility 里面去，最后把 utility 类放到一个全局的变量中，这样任何地方都可以调用 utility 的方法。  
+> 如果用 AngularJS 的 service，你按照他的规则创建一个 utility 服务，然后在任何地方都可以通过依赖注入调用 utility 里面的方法  
 常用服务:  
-$http -- AngularJS 应用中最常用的服务.服务向服务器发送请求,应用响应服务器传送过来的数据  
-$http.get(url) 是用于读取服务器数据的函数  
+$http -- AngularJS 应用中最常用的服务. 服务向服务器发送请求, 应用响应服务器传送过来的数据  
+$http.get(url) -- 读取服务器数据的函数  
 $timeout -- 对应了 JavaSript 中的 window.setTimeout 函数  
 $interval -- 对应了 JavaScript 中的 window.setInterval 函数  
 自定义服务:  
 ```  
-app.service('hexafy', function() {  
+app.service('hexify', function() {  
     this.myFunc = function (x) {  
         return x.toString(16); 
     }  
 });  
 // Controller中使用  
-app.controller('myCtrl', function($scope, hexafy) {  
+app.controller('myCtrl', function($scope, hexify) {  
     $scope.hex = hexafy.myFunc(255);  
 });  
 // Filter中使用  
@@ -134,6 +129,7 @@ app.filter('myFormat',['hexify', function(hexify) {
     };  
 }]);  
 ```  
+
 14. Angular Select  
 可以使用数组或对象创建一个下拉列表选项  
 ng-options 创建选择框  
@@ -154,7 +150,7 @@ ng-options 使用对象:
 ```  
 <select ng-model="selectedSite" ng-options="x for (x, y) in sites">  
 </select>  
-<h1>你选择的值是: {{selectedSite}}</h1>  
+<h1>你选择的值是: {{ selectedSite }}</h1>  
 ```  
 ng-repeat 指令来下拉列表:  
 选择的值是字符串,局限  
@@ -241,44 +237,25 @@ app.controller('formCtrl', function($scope) {
 AngularJS 提供了动画效果,可以配合 CSS 使用  
 AngularJS 使用动画需要引入 angular-animate.min.js 库  
 ngAnimate 做了什么:  
-ngAnimate 模型可以添加或移除 class  
-ngAnimate 模型并不能使 HTML 元素产生动画,但是 ngAnimate 会监测事件,类似隐藏显示 HTML 元素,如果事件发生 ngAnimate 就会使用预定义的 class 来设置 HTML 元素的动画.  
+> ngAnimate 模型可以添加或移除 class  
+> ngAnimate 模型并不能使 HTML 元素产生动画,但是 ngAnimate 会监测事件,类似隐藏显示 HTML 元素,如果事件发生 ngAnimate 就会使用预定义的 class 来设置 HTML 元素的动画.  
 AngularJS 添加/移除 class 的指令:  
-ng-show  
-ng-hide  
-ng-class  
-ng-view  
-ng-include  
-ng-repeat  
-ng-if  
-ng-switch  
+    * ng-show  
+    * ng-hide  
+    * ng-class  
+    * ng-view  
+    * ng-include  
+    * ng-repeat  
+    * ng-if  
+    * ng-switch  
 ng-show 和 ng-hide 指令用于添加或移除 ng-hide class 的值.  
-其他指令会在进入 DOM 会添加 ng-enter 类，移除 DOM 会添加 ng-leave 属性.  
+其他指令会在进入 DOM 会添加 ng-enter 类，移出 DOM 会添加 ng-leave 属性.  
 当 HTML 元素位置改变时,ng-repeat 指令同样可以添加 ng-move 类  
 此外, 在动画完成后，HTML 元素的类集合将被移除  
-例如: ng-hide 指令会添加一下类:  
-ng-animate  
-ng-hide-animate  
-ng-hide-add (如果元素将被隐藏)  
-ng-hide-remove (如果元素将显示)  
-ng-hide-add-active (如果元素将隐藏)  
-ng-hide-remove-active (如果元素将显示)  
-
-
-
-
-https://o361vzvu3.qnssl.com/upload/avatar/14f1b43c90b-1afc185432223f3b?imageView/1/w/180/h/180
-https://o361vzvu3.qnssl.com/upload/avatar/upload/avatar/14f1b43c90b-1afc185432223f3b?imageView/1/w/180/h/180
-
-
-   // TODO: alert when quit window
-            $event.onbeforeunload = function () {
-                UIService.confirm('确认离开?', '您即将离开编辑页面, 正在编辑的内容将被自动保存.').then(function (yes) {
-                    // TODO: add save to localstorage
-                });
-            }
-            $scope.$on('$stateChangeStart', function () {
-                UIService.confirm('确认离开?', '您即将离开编辑页面, 正在编辑的内容将被自动保存.').then(function (yes) {
-                    // TODO: add save to localstorage
-                });
-            })
+例如: ng-hide 指令会添加以下类:  
+> ng-animate  
+> ng-hide-animate  
+> ng-hide-add (如果元素将被隐藏)  
+> ng-hide-remove (如果元素将显示)  
+> ng-hide-add-active (如果元素将隐藏)  
+> ng-hide-remove-active (如果元素将显示)  
