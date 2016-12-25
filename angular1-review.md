@@ -84,9 +84,9 @@ $provider.factory / $provider.provider / $provider.service / $provider.value / $
 ### $injector  
 用于获取由 provider 定义的东西，实例化类型，调用方法，load 模块  
 1. get(name, [caller]);  
-Return an instance of the service.
+Return an instance of the service.  
 2. invoke(fn, [self], [locals]);  
-Invoke the method and supply the method arguments from the $injector.  
+Invoke the method and supply the method arguments from the $injector.   
 3. has(name);  
 Allows the user to query if the particular service exists.  
 4. instantiate(Type, [locals]);  
@@ -130,7 +130,8 @@ angular.module('myApp', []).config([ '$provide', function($provide) {
        originalWarn.apply($delegate, arguments);
     };
     return $delegate;
-  }]);}]);
+  }]);
+}]);
 ```  
 对于 $delegate 我可以:  
 1. 完全替换  
@@ -138,11 +139,12 @@ angular.module('myApp', []).config([ '$provide', function($provide) {
 3. 增强功能  
 
 针对不同的*Service*，Decorator 存在不同的规则(Service -- name, Filter/Directive -- name + 'Filter/Directive')  
-|Service Type|Selector|$delegate|  
-|------------|--------|---------|  
-|Service     | ServiceName| Object/function|  
-|Directive   | Name + 'Directive| Array.<DirectiveObject>|  
-|Filter      | Name + 'Filter| Function|  
+
+|Service Type|Selector           |$delegate                 |    
+|------------|-------------------|--------------------------|   
+|Service     | ServiceName       | Object/function          |   
+|Directive   | Name + 'Directive'| `Array.<DirectiveObject>`|   
+|Filter      | Name + 'Filter'   | Function                 |   
 
 *module.decorator -- SAME AS $provider.decorator*  
 
@@ -160,7 +162,7 @@ angular.module('myApp', []).config([ '$provide', function($provide) {
 ### ngRepeat  
 根据 Collection (Array or Object) 中的对象实例化 template  
 `$index` -- 第几个  
-`$first`/`middle`/`$last`/`$even`/`$odd`  
+`$first`/`$middle`/`$last`/`$even`/`$odd`  
 *在 ngInit 中为上面的属性重命名对于嵌套 ngRepeat 很有用*  
 
 ```  
@@ -169,7 +171,7 @@ angular.module('myApp', []).config([ '$provide', function($provide) {
 
 *ngRepeat 会检测 Collection 的变化*  
 track:  
-default : no duplicate  
+    default : no duplicate  
 `track by $index or trackByFunction(n)`    
 针对对象:  
 使用对象的 identifier track 而不是整个 Object (没有 id 就用 $index)  
@@ -196,12 +198,9 @@ Repeat 一段 html
 2. Object 表达式 -- 每个键值为`true`的`key`将作为类名称  
 3. Array 表达式 -- Array 中的每个对象必须是 1 或 2  
 ```  
-<ANY
-  ng-class="expression">
-...
-</ANY>
-<!-- Another -->
-<ANY class="ng-class: expression;"> ... </ANY>
+<div ng-class="{true: 'active', false: 'inactive'}[isActive]">
+<div ng-class {'selected': isSelected, 'car': isCar}">
+<div class=”{{test}}”></div>
 ```  
 
 ### ngIf  
@@ -209,7 +208,7 @@ Repeat 一段 html
 
 和 ng-show & ng-hide 的不同之处  
 *完全移除/生成 Dom 树*而不是调整 visibility  
-会生成 （原型继承自父元素) /移除元素的 Scope  
+会生成 （原型继承自父元素) / 移除元素的 Scope  
 > An important implication of this is if ngModel is used within ngIf to bind to a javascript primitive defined in the parent scope. In this case any modifications made to the variable within the child scope will override (hide) the value in the parent scope.  
 
 ### ngSubmit  
